@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+.step::before {
+  content: '';
+  position: absolute;
+  width: 2px;
+  background-color: #34D399; /* Tailwind's green-500 */
+  top: 0;
+  bottom: 0;
+  left: 2rem;
+  z-index: -1;
+}
+
+.step:first-child::before {
+  top: 50%;
+}
+
+.step:last-child::before {
+  bottom: 50%;
+}
+
+body {
+    font-family: 'Roboto Condensed', sans-serif;
+  }
+  
+ 
