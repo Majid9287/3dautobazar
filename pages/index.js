@@ -2,6 +2,10 @@ import { NextSeo } from "next-seo";
 import { useRouter } from "next/navigation";
 import styles from "@/styles/Color.module.css";
 import TipCard from "../components/TipCard";
+import Community from "../components/Community";
+import ServiceCard from "../components/ServiceCard";
+import Hero from "../components/Hero";
+
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -12,14 +16,12 @@ import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { HiOutlineLightBulb } from "react-icons/hi";
 import { Md3dRotation } from "react-icons/md";
-import { TbRotate3D } from "react-icons/tb";
 import { LiaAdSolid } from "react-icons/lia";
-import { GrChatOption } from "react-icons/gr";
 import { FaImages } from "react-icons/fa";
 import { IoSearchSharp } from "react-icons/io5";
+import { FaServicestack } from "react-icons/fa";
 import { IoMdOptions } from "react-icons/io";
 import { SiAnswer } from "react-icons/si";
-import { FaLongArrowAltRight } from "react-icons/fa";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -57,19 +59,29 @@ const Tips = [
     imageSrc: "path/to/image5.jpg", // Add appropriate image path or URL if available
   },
 ];
+const ServiceData = [
+  {
+    title: "Sell Your Car With 3D View",
+    description: "Sell Your Car with 100% free and 3D View On AutoBazar",
+    imageSrc: "./images/sell.png",
+  },
+  {
+    title: "Loan Calculator",
+    description: "Estimate loan payments or financing options direct within the platform.",
+    imageSrc: "austin_image.jpg",
+  },
+  {
+    title: "Car Comparison",
+    description: "Compare two cars side-by-side to help you make an informed decision.",
+    imageSrc: "austin_image.jpg",
+  },
+  {
+    title: "Live Chat Support",
+    description: "Engage in real-time chat support with direct sellers.",
+    imageSrc: "austin_image.jpg",
+  },
+];
 
-// Rendering the Tips
-<div className="flex flex-col md:flex-row justify-center py-8 gap-8">
-  {Tips.map((tip, index) => (
-    <TipCard
-      key={index}
-      title={tip.title}
-      description={tip.description}
-      imageSrc={tip.imageSrc}
-      onClick={() => {}}
-    />
-  ))}
-</div>;
 
 export default function Home() {
   const router = useRouter();
@@ -419,48 +431,7 @@ export default function Home() {
           </section>
 
           <section className={` ${styles.gradientBg}`}>
-            <div className="container mx-auto">
-              <div className="flex flex-wrap justify-center content-center py-16">
-                <div className="max-w-sm p-6 rounded-lg">
-                  <TbRotate3D className="text-5xl pb-2 text-green-500" />
-
-                  <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900   ">
-                    3D Model Generation
-                  </h5>
-
-                  <p className="mb-3 font-normal text-gray-900">
-                    Upload images of your car from various angles and instantly
-                    generate a detailed 3D model for visualization and analysis.
-                  </p>
-                </div>
-
-                <div className="max-w-sm p-6 rounded-lg">
-                  <Md3dRotation className="text-5xl pb-2 text-red-800" />
-
-                  <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900   ">
-                    3D Virtual Tour
-                  </h5>
-
-                  <p className="mb-3 font-normal text-gray-900">
-                    Take a 3D virtual tour of the car's interior and exterior.
-                    Experience the car as if you are actually there.
-                  </p>
-                </div>
-
-                <div className="max-w-sm p-6 rounded-lg ">
-                  <GrChatOption className="text-5xl pb-2 text-blue-500" />
-
-                  <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900   ">
-                    Chat With Sellers
-                  </h5>
-
-                  <p className="mb-3 font-normal  text-gray-900">
-                    Direct chat with sellers, and kow about their vehicles
-                    specifications.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <Hero/>
 
             <section className="max-w-screen-xl mx-auto px-1 justify-center ">
               <div className="flex text-black justify-center text-center">
@@ -665,8 +636,8 @@ export default function Home() {
                     </span>{" "}
                   </div>
                 </div>
-                <div className="flex">
-                  <div className="    text-slate-500  ml-14 w-3/4 ">
+                <div className="md:flex">
+                  <div className="    text-slate-500  ml-14  md:w-3/4">
                     <p>
                       Sign Up: New users can create an account using their email
                       or social media profiles.<br></br>
@@ -674,11 +645,11 @@ export default function Home() {
                       access their personalized dashboard.
                     </p>
                   </div>
-                  <div className="flex-shrink-0 ml-auto  w-1/4">
+                  <div className="flex-shrink-0 ml-auto  md:w-1/4 px-12">
                     <img
-                      src="/images/signupn.jpg"
+                      src="/images/account.png"
                       alt="Respond to Inquiries"
-                      className="h-24 w-24 object-contain"
+                      className=" h-40 w-40 md:h-full md:w-full object-contain"
                     />
                   </div>
                 </div>
@@ -698,18 +669,18 @@ export default function Home() {
                     </span>{" "}
                   </div>
                 </div>
-                <div className="flex">
-                  <div className="text-slate-500  ml-14  w-3/4 ">
+                <div className="md:flex">
+                  <div className="text-slate-500  ml-14  md:w-3/4">
                     <p>
                       Start by clicking on the 'Add Listing' button on your
                       dashboard to begin creating a new vehicle listing.
                     </p>
                   </div>
-                  <div className="flex-shrink-0 ml-auto w-1/4">
+                  <div className="flex-shrink-0 ml-auto md:w-1/4 px-12">
                     <img
-                      src="/images/respond-inquiries.png"
+                      src="/images/create a listing.png"
                       alt="Respond to Inquiries"
-                      className="h-24 w-24 object-contain"
+                      className=" h-40 w-40 md:h-full md:w-full object-contain"
                     />
                   </div>{" "}
                 </div>
@@ -729,19 +700,19 @@ export default function Home() {
                     </span>{" "}
                   </div>
                 </div>
-                <div className="flex">
-                  <div className="text-slate-500  ml-14  w-3/4 ">
+                <div className="md:flex">
+                  <div className="text-slate-500  ml-14  md:w-3/4">
                     <p>
                       Upload standard 2D images of the vehicle along with a
                       detailed description. This allows for a quick and easy ad
                       posting for those who prefer traditional listings.
                     </p>
                   </div>
-                  <div className="flex-shrink-0 ml-auto w-1/4">
+                  <div className="flex-shrink-0 ml-auto md:w-1/4 px-12">
                     <img
-                      src="/images/respond-inquiries.png"
+                      src="/images/upload_2D_images.png"
                       alt="Respond to Inquiries"
-                      className="h-24 w-24 object-contain"
+                      className=" h-40 w-40 md:h-full md:w-full object-contain"
                     />
                   </div>{" "}
                 </div>
@@ -761,8 +732,8 @@ export default function Home() {
                     </span>{" "}
                   </div>
                 </div>
-                <div className="flex">
-                  <div className="text-slate-500  ml-14  w-3/4 ">
+                <div className="md:flex">
+                  <div className="text-slate-500  ml-14  md:w-3/4">
                     <p>
                       Capture Multiple Angles: To create a 3D model, users need
                       to take a series of images from multiple angles, ensuring
@@ -772,11 +743,11 @@ export default function Home() {
                       model.
                     </p>
                   </div>
-                  <div className="flex-shrink-0 ml-auto w-1/4">
+                  <div className="flex-shrink-0 ml-auto md:w-1/4 px-12">
                     <img
-                      src="/images/respond-inquiries.png"
+                      src="/images/3d_model_generation.png"
                       alt="Respond to Inquiries"
-                      className="h-24 w-24 object-contain"
+                      className="h-40 w-40 md:h-full md:w-full object-contain"
                     />
                   </div>{" "}
                 </div>
@@ -796,18 +767,18 @@ export default function Home() {
                     </span>{" "}
                   </div>
                 </div>
-                <div className="flex">
-                  <div className="text-slate-500  ml-14  w-3/4 ">
+                <div className="md:flex">
+                  <div className="text-slate-500  ml-14  md:w-3/4">
                     <p>
                       Monitor messages and inquires from potential buyers.
                       Respond quickly and provide additional information.
                     </p>
                   </div>
-                  <div className="flex-shrink-0 ml-auto w-1/4">
+                  <div className="flex-shrink-0 ml-auto md:w-1/4 px-12">
                     <img
-                      src="/images/respond-inquiries.png"
+                      src="/images/respond_to_quiries.png"
                       alt="Respond to Inquiries"
-                      className="h-24 w-24 object-contain"
+                      className="h-40 w-40 md:h-full md:w-full object-contain"
                     />
                   </div>{" "}
                 </div>
@@ -815,146 +786,29 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="max-w-screen-xl mx-auto justify-center">
-            <h1 className="text-3xl text-black font-bold text-center mb-8">
-              Our services
+          <section className="max-w-screen-xl mx-auto justify-center pt-16">
+            <div className="flex justify-center pb-2">
+              <span className="border rounded-full border-green-500 flex justify-center p-2  text-green-500">
+                <FaServicestack className="text-blue-500 text-2xl" />
+              </span>
+            </div>
+            <h1 className="text-3xl font-bold text-center  text-black">
+              Our <span className="text-green-500">Services</span>
             </h1>
-
             <div className="flex flex-col md:flex-row justify-center py-8 gap-1 md:gap-16">
-              <div
-                className={` rounded-lg   w-full md:w-1/5 ${styles.gradientBg2}`}
-              >
-                <div className=" rounded-t-lg mb-1">
-                  <img
-                    src="austin_image.jpg"
-                    alt="Showcase Car"
-                    className="w-full p-6  h-48 object-cover rounded-t-lg"
-                  />
-                </div>
-                <div className="p-2 flex justify-center text-center">
-                  <div className="text-center">
-                    <h2 className="text-lg text-black font-semibold mb-2">
-                      Sell Your Car With 3d View
-                    </h2>
-                    <p className="text-gray-600 mb-2">
-                      Sell Your Car with 100% free and 3d View On AutoBazar
-                    </p>
-                    <span className=" text-black  flex justify-center  font-bold   border-green-500 rounded ">
-                      <FaLongArrowAltRight className="text-5xl font-bold" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div
-                className={` rounded-lg   w-full md:w-1/5 ${styles.gradientBg2}`}
-              >
-                <div className=" rounded-t-lg mb-1">
-                  <img
-                    src="austin_image.jpg"
-                    alt="Showcase Car"
-                    className="w-full p-6  h-48 object-cover rounded-t-lg"
-                  />
-                </div>
-                <div className="p-2 flex justify-center text-center">
-                  <div className="text-center">
-                    <h2 className="text-lg text-black font-semibold mb-2">
-                      Sell Your Car With 3d View
-                    </h2>
-                    <p className="text-gray-600 mb-2">
-                      Sell Your Car with 100% free and 3d View On AutoBazar
-                    </p>
-                    <span className=" text-black  flex justify-center  font-bold   border-green-500 rounded ">
-                      <FaLongArrowAltRight className="text-5xl font-bold" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div
-                className={` rounded-lg   w-full md:w-1/5 ${styles.gradientBg2}`}
-              >
-                <div className=" rounded-t-lg mb-1">
-                  <img
-                    src="austin_image.jpg"
-                    alt="Showcase Car"
-                    className="w-full p-6  h-48 object-cover rounded-t-lg"
-                  />
-                </div>
-                <div className="p-2 flex justify-center text-center">
-                  <div className="text-center">
-                    <h2 className="text-lg text-black font-semibold mb-2">
-                      Sell Your Car With 3d View
-                    </h2>
-                    <p className="text-gray-600 mb-2">
-                      Sell Your Car with 100% free and 3d View On AutoBazar
-                    </p>
-                    <span className=" text-black  flex justify-center  font-bold   border-green-500 rounded ">
-                      <FaLongArrowAltRight className="text-5xl font-bold" />
-                    </span>
-                  </div>
-                </div>
-              </div>
+              {ServiceData.map((card, index) => (
+                <ServiceCard
+                  key={index}
+                  title={card.title}
+                  description={card.description}
+                  imageSrc={card.imageSrc}
+                />
+              ))}
             </div>
           </section>
 
-          <section>
-            <div className="max-w-screen-xl text-red-800 mx-auto justify-center py-2 ">
-              <div className={`p-12 rounded-lg ${styles.gradientBg3}`}>
-                <div className="py-2 ">
-                  <h2 className="font-bold text-3xl">
-                    Join Our Auto Enthusiast Community
-                  </h2>
-                </div>
-                <div className="md:flex text-black">
-                  <div className="md:w-2/4">
-                    {" "}
-                    <div>
-                      If you need to use a one-off gap value that doesn’t make
-                      sense to include in your theme, use square brackets to
-                      generate a property on the fly using any arbitrary
-                      value.If you need to use a one-off gap value that doesn’t
-                      make sense to include in your theme, use square brackets
-                      to generate a property on the fly using any arbitrary
-                      value.
-                    </div>
-                    <div className="md:p-12 py-12">
-                      <div className="bg-white items-center rounded-full mx-auto md:mb-3  max-w-screen-sm flex sm:space-y-0">
-                        <div className="relative w-full">
-                          <label
-                            for="email"
-                            className="hidden mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                          >
-                            Email address
-                          </label>
-
-                          <input
-                            className="block py-2 pl-10 w-full text-sm text-gray-900  rounded-full   "
-                            placeholder="Enter your email"
-                            type="email"
-                            id="email"
-                            required=""
-                          />
-                        </div>
-                        <div>
-                          <button
-                            type="submit"
-                            className="py-3 bg-red-800 px-5 w-full text-sm font-medium text-center text-white border cursor-pointer bg-primary-700 border-primary-600  rounded-full hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                          >
-                            Subscribe
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="md:w-2/4">
-                  <img
-                      src="/images/contact1.png"
-                      alt="Respond to Inquiries"
-                      className=" "
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+          <section className="pt-16">
+            <Community />
           </section>
         </div>
       </main>
