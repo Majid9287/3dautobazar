@@ -10,10 +10,10 @@ const FooterOne= () => {
       <hr className="mb-4" />
       <div className="mx-auto max-w-6xl items-center justify-between px-4 flex lg:px-0">
         <div className="inline-flex items-center pt-2">
-       <Link href='/'> <span className={`font-bold `}>AutoBazar</span></Link>
+       <Link href='/'> <span className={`font-bold `}>3d-AutoBazar</span></Link>
         </div>
         <div className="mt-4 md:mt-0">
-          <p className="text-sm font-medium pb-1">© 2024 AutoBazar. All rights reserved.</p>
+          <p className="text-sm font-medium pb-1">© 2024 3d-AutoBazar. All rights reserved.</p>
         </div>
       </div>
       <hr className="mt-4" />

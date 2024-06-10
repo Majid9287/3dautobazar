@@ -7,6 +7,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
+import { GiClockwork } from "react-icons/gi";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { HiOutlineLightBulb } from "react-icons/hi";
@@ -27,29 +28,34 @@ import React from "react";
 const Tips = [
   {
     title: "Showcase Your Car's Best Features to Make a Lasting Impression",
-    description: "Highlighting the best features of your car can significantly enhance its appeal to potential buyers. Clean and polish your vehicle to make it visually appealing. Take high-quality photos that showcase its exterior, interior, and notable features.",
-    imageSrc: "path/to/image1.jpg" // Add appropriate image path or URL if available
+    description:
+      "Highlighting the best features of your car can significantly enhance its appeal to potential buyers. Clean and polish your vehicle to make it visually appealing. Take high-quality photos that showcase its exterior, interior, and notable features.",
+    imageSrc: "path/to/image1.jpg", // Add appropriate image path or URL if available
   },
   {
     title: "Provide Comprehensive Maintenance Records",
-    description: "Buyers often seek reassurance about the condition and history of a used car. Having detailed maintenance records can instill confidence in potential buyers and set your listing apart.",
-    imageSrc: "path/to/image2.jpg" // Add appropriate image path or URL if available
+    description:
+      "Buyers often seek reassurance about the condition and history of a used car. Having detailed maintenance records can instill confidence in potential buyers and set your listing apart.",
+    imageSrc: "path/to/image2.jpg", // Add appropriate image path or URL if available
   },
   {
     title: "Create a Thorough and Honest Listing",
-    description: "Craft a detailed and transparent listing that provides potential buyers with all the information they need. Be honest about the condition of your car, including any imperfections or issues it may have.",
-    imageSrc: "path/to/image3.jpg" // Add appropriate image path or URL if available
+    description:
+      "Craft a detailed and transparent listing that provides potential buyers with all the information they need. Be honest about the condition of your car, including any imperfections or issues it may have.",
+    imageSrc: "path/to/image3.jpg", // Add appropriate image path or URL if available
   },
   {
     title: "List Proper Images for Better 3D Models",
-    description: "For a high-quality 3D model, take comprehensive images of your car from multiple angles. Ensure you capture every aspect, including the front, back, sides, top, and interior. Clear, well-lit photos help in creating an accurate and appealing 3D representation, making your listing more attractive to potential buyers.",
-    imageSrc: "path/to/image4.jpg" // Add appropriate image path or URL if available
+    description:
+      "For a high-quality 3D model, take comprehensive images of your car from multiple angles. Ensure you capture every aspect, including the front, back, sides, top, and interior. Clear, well-lit photos help in creating an accurate and appealing 3D representation, making your listing more attractive to potential buyers.",
+    imageSrc: "path/to/image4.jpg", // Add appropriate image path or URL if available
   },
   {
     title: "Set a Competitive Price to Attract Serious Buyers Quickly",
-    description: "Research the market value of your car to set a competitive price. Consider factors like the car's age, mileage, condition, and current market trends. A well-priced car is more likely to attract serious buyers quickly.",
-    imageSrc: "path/to/image5.jpg" // Add appropriate image path or URL if available
-  }
+    description:
+      "Research the market value of your car to set a competitive price. Consider factors like the car's age, mileage, condition, and current market trends. A well-priced car is more likely to attract serious buyers quickly.",
+    imageSrc: "path/to/image5.jpg", // Add appropriate image path or URL if available
+  },
 ];
 
 // Rendering the Tips
@@ -63,7 +69,7 @@ const Tips = [
       onClick={() => {}}
     />
   ))}
-</div>
+</div>;
 
 export default function Home() {
   const router = useRouter();
@@ -383,7 +389,7 @@ export default function Home() {
           </section>
           <section className="hidden md:flex">
             <div
-              className={`absolute top-0 right-0 h-[50vh] px-3 py-2 z-10 ${styles.gradientBg2}`}
+              className={`absolute top-0 right-0 h-[50vh]   md:h-[70vh] px-3 py-2 z-10 ${styles.gradientBg2}`}
             >
               <div className=" flex items-center justify-center  h-full w-full">
                 <h2 className="text-lg font-bold text-white rotate-90">
@@ -617,20 +623,33 @@ export default function Home() {
               </div>
             </div>
 
-           
-              <div>
-            <Slider {...slickSettings} className="">
-              {Tips.map((tip) => (
-                <TipCard
-                  title={tip.title}
-                  description={tip.description}
-                  imageSrc={tip.imageSrc}
-                />
-              ))}</Slider></div>
-            
+            <div>
+              <Slider {...slickSettings} className="">
+                {Tips.map((tip) => (
+                  <TipCard
+                    title={tip.title}
+                    description={tip.description}
+                    imageSrc={tip.imageSrc}
+                  />
+                ))}
+              </Slider>
+            </div>
           </section>
 
-          <section className="max-w-screen-lg mx-auto justify-center">
+          <section className="max-w-screen-lg mx-auto justify-center pt-16">
+            <div className="flex justify-center pb-2">
+              <span className="border rounded-full border-green-500 flex justify-center p-2  text-green-500">
+                <GiClockwork className="text-blue-500 text-2xl" />
+              </span>
+            </div>
+            <h1 className="text-3xl font-bold text-center  text-black">
+              How It <span className="text-green-500">Works</span>
+            </h1>
+            <div className="flex justify-center  text-green-500">
+              <div class="flex justify-center">
+                <div class=" border-green-500 ">....................</div>
+              </div>
+            </div>
             <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:ml-[1.25rem] md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-green-500 before:to-transparent">
               <div className="relative">
                 <div className="md:flex items-center md:space-x-4 mb-3">
@@ -647,17 +666,17 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="flex">
-                  <div className=" bg-white   text-slate-500  ml-14 ">
+                  <div className="    text-slate-500  ml-14 w-3/4 ">
                     <p>
                       Sign Up: New users can create an account using their email
-                      or social media profiles. Login: Existing users can log in
-                      with their credentials to access their personalized
-                      dashboard. Start Listing
+                      or social media profiles.<br></br>
+                      Login: Existing users can log in with their credentials to
+                      access their personalized dashboard.
                     </p>
                   </div>
-                  <div className="flex-shrink-0 ml-auto">
+                  <div className="flex-shrink-0 ml-auto  w-1/4">
                     <img
-                      src="/images/respond-inquiries.png"
+                      src="/images/signupn.jpg"
                       alt="Respond to Inquiries"
                       className="h-24 w-24 object-contain"
                     />
@@ -680,15 +699,13 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="flex">
-                  <div className=" bg-white p-4    text-slate-500  ml-14 ">
+                  <div className="text-slate-500  ml-14  w-3/4 ">
                     <p>
-                      Sign Up: New users can create an account using their email
-                      or social media profiles. Login: Existing users can log in
-                      with their credentials to access their personalized
-                      dashboard. Start Listing
+                      Start by clicking on the 'Add Listing' button on your
+                      dashboard to begin creating a new vehicle listing.
                     </p>
                   </div>
-                  <div className="flex-shrink-0 ml-auto">
+                  <div className="flex-shrink-0 ml-auto w-1/4">
                     <img
                       src="/images/respond-inquiries.png"
                       alt="Respond to Inquiries"
@@ -713,14 +730,14 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="flex">
-                  <div className=" bg-white p-4    text-slate-500  ml-14 ">
+                  <div className="text-slate-500  ml-14  w-3/4 ">
                     <p>
                       Upload standard 2D images of the vehicle along with a
                       detailed description. This allows for a quick and easy ad
                       posting for those who prefer traditional listings.
                     </p>
                   </div>
-                  <div className="flex-shrink-0 ml-auto">
+                  <div className="flex-shrink-0 ml-auto w-1/4">
                     <img
                       src="/images/respond-inquiries.png"
                       alt="Respond to Inquiries"
@@ -745,7 +762,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="flex">
-                  <div className=" bg-white p-4    text-slate-500  ml-14 ">
+                  <div className="text-slate-500  ml-14  w-3/4 ">
                     <p>
                       Capture Multiple Angles: To create a 3D model, users need
                       to take a series of images from multiple angles, ensuring
@@ -755,7 +772,7 @@ export default function Home() {
                       model.
                     </p>
                   </div>
-                  <div className="flex-shrink-0 ml-auto">
+                  <div className="flex-shrink-0 ml-auto w-1/4">
                     <img
                       src="/images/respond-inquiries.png"
                       alt="Respond to Inquiries"
@@ -780,13 +797,13 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="flex">
-                  <div className=" bg-white p-4    text-slate-500  ml-14 ">
+                  <div className="text-slate-500  ml-14  w-3/4 ">
                     <p>
                       Monitor messages and inquires from potential buyers.
                       Respond quickly and provide additional information.
                     </p>
                   </div>
-                  <div className="flex-shrink-0 ml-auto">
+                  <div className="flex-shrink-0 ml-auto w-1/4">
                     <img
                       src="/images/respond-inquiries.png"
                       alt="Respond to Inquiries"
@@ -881,14 +898,14 @@ export default function Home() {
 
           <section>
             <div className="max-w-screen-xl text-red-800 mx-auto justify-center py-2 ">
-              <div className={`p-12 rounded-lg ${styles.gradientBg2}`}>
-                <div className=" ">
+              <div className={`p-12 rounded-lg ${styles.gradientBg3}`}>
+                <div className="py-2 ">
                   <h2 className="font-bold text-3xl">
                     Join Our Auto Enthusiast Community
                   </h2>
                 </div>
-                <div className="flex text-black">
-                  <div>
+                <div className="md:flex text-black">
+                  <div className="md:w-2/4">
                     {" "}
                     <div>
                       If you need to use a one-off gap value that doesn’t make
@@ -928,7 +945,13 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  <div></div>
+                  <div className="md:w-2/4">
+                  <img
+                      src="/images/contact1.png"
+                      alt="Respond to Inquiries"
+                      className=" "
+                    />
+                  </div>
                 </div>
               </div>
             </div>
