@@ -1,6 +1,7 @@
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/navigation";
 import styles from "@/styles/Color.module.css";
+import TipCard from "../components/TipCard";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -8,6 +9,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { MdOutlineManageAccounts } from "react-icons/md";
+import { HiOutlineLightBulb } from "react-icons/hi";
 import { Md3dRotation } from "react-icons/md";
 import { TbRotate3D } from "react-icons/tb";
 import { LiaAdSolid } from "react-icons/lia";
@@ -17,7 +19,38 @@ import { IoSearchSharp } from "react-icons/io5";
 import { IoMdOptions } from "react-icons/io";
 import { SiAnswer } from "react-icons/si";
 import { FaLongArrowAltRight } from "react-icons/fa";
+
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import React from "react";
+const Tips = [
+  {
+    title: "Showcase Your Car's Best Features",
+    description: "Highlighting the best features of your car can significantly enhance its appeal to potential buyers. Clean and polish your vehicle to make it visually appealing. Take high-quality photos that showcase its exterior, interior, and notable features.",
+    imageSrc: "path/to/image1.jpg" // Add appropriate image path or URL if available
+  },
+  {
+    title: "Provide Comprehensive Maintenance Records",
+    description: "Buyers often seek reassurance about the condition and history of a used car. Having detailed maintenance records can instill confidence in potential buyers and set your listing apart.",
+    imageSrc: "path/to/image2.jpg" // Add appropriate image path or URL if available
+  },
+  {
+    title: "Create a Thorough and Honest Listing",
+    description: "Craft a detailed and transparent listing that provides potential buyers with all the information they need. Be honest about the condition of your car, including any imperfections or issues it may have.",
+    imageSrc: "path/to/image3.jpg" // Add appropriate image path or URL if available
+  },
+  {
+    title: "List Proper Images for Better 3D Models",
+    description: "For a high-quality 3D model, take comprehensive images of your car from multiple angles. Ensure you capture every aspect, including the front, back, sides, top, and interior. Clear, well-lit photos help in creating an accurate and appealing 3D representation, making your listing more attractive to potential buyers.",
+    imageSrc: "path/to/image4.jpg" // Add appropriate image path or URL if available
+  },
+  {
+    title: "Set a Competitive Price",
+    description: "Research the market value of your car to set a competitive price. Consider factors like the car's age, mileage, condition, and current market trends. A well-priced car is more likely to attract serious buyers quickly.",
+    imageSrc: "path/to/image5.jpg" // Add appropriate image path or URL if available
+  }
+];
 export default function Home() {
   const router = useRouter();
   const containerRef = useRef();
@@ -199,6 +232,87 @@ export default function Home() {
     };
   }, []);
 
+  function NextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{
+          ...style,
+          display: "block",
+          background: "blue",
+          borderRadius: "50%",
+        }}
+        onClick={onClick}
+      />
+    );
+  }
+
+  function PrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{
+          ...style,
+          display: "block",
+          background: "blue",
+          borderRadius: "50%",
+        }}
+        onClick={onClick}
+      />
+    );
+  }
+
+  const slickSettings = {
+    slidesToShow: 4,
+    slidesToScroll: 1,
+
+    useCSS: true,
+    autoplay: true,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    arrows: true,
+    pauseOnFocus: true,
+    pauseOnHover: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+
+          slidesToScroll: 1,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+
+          useCSS: false,
+          autoplay: true,
+          prevArrow: null,
+          nextArrow: null,
+          arrows: false,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+
+          autoplay: true,
+          prevArrow: null,
+          nextArrow: null,
+          arrows: false,
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <NextSeo
@@ -255,7 +369,7 @@ export default function Home() {
           </section>
           <section className="hidden md:flex">
             <div
-              className={`absolute top-0 right-0 h-[60vh] px-3 py-2 z-10 ${styles.gradientBg2}`}
+              className={`absolute top-0 right-0 h-[50vh] px-3 py-2 z-10 ${styles.gradientBg2}`}
             >
               <div className=" flex items-center justify-center  h-full w-full">
                 <h2 className="text-lg font-bold text-white rotate-90">
@@ -290,7 +404,7 @@ export default function Home() {
                 <div className="max-w-sm p-6 rounded-lg">
                   <TbRotate3D className="text-5xl pb-2 text-green-500" />
 
-                  <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                  <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900   ">
                     3D Model Generation
                   </h5>
 
@@ -303,7 +417,7 @@ export default function Home() {
                 <div className="max-w-sm p-6 rounded-lg">
                   <Md3dRotation className="text-5xl pb-2 text-red-800" />
 
-                  <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                  <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900   ">
                     3D Virtual Tour
                   </h5>
 
@@ -316,7 +430,7 @@ export default function Home() {
                 <div className="max-w-sm p-6 rounded-lg ">
                   <GrChatOption className="text-5xl pb-2 text-blue-500" />
 
-                  <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                  <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900   ">
                     Chat With Sellers
                   </h5>
 
@@ -328,7 +442,7 @@ export default function Home() {
               </div>
             </div>
 
-            <section className="max-w-screen-xl mx-auto justify-center ">
+            <section className="max-w-screen-xl mx-auto px-1 justify-center ">
               <div className="flex text-black justify-center text-center">
                 <div className="">
                   <h2 className="text-4xl lg:text-5xl font-bold leading-tight mb-2">
@@ -336,113 +450,134 @@ export default function Home() {
                   </h2>
                 </div>
               </div>
-              <div className={`flex justify-center `}>
-                <div className="grid gap-1  pb-6 md:grid-cols-3 lg:grid-cols-4">
-                  <div className="group my-10 flex w-full max-w-xs flex-col overflow-hidden border border-gray-100 bg-white shadow-md">
-                    <a className="relative flex h-60 overflow-hidden" href="#">
-                      <img
-                        className="absolute top-0 right-0 h-full w-full object-cover"
-                        src="https://cache1.pakwheels.com/system/car_generation_pictures/5361/original/Corolla-X-Cars-Cropped-Pictures-for-Website.jpg?1606903674"
-                        alt="product image"
-                      />
-                    </a>
-                    <div className="mt-4 px-5 pb-5">
-                      <a href="#">
-                        <h5 className="text-xl font-bold tracking-tight text-slate-900">
-                          Lululemon Comfort Tee - White
-                        </h5>
+              <div className={``}>
+                <div className="px-2">
+                  <Slider {...slickSettings} className="">
+                    <div className="group   my-2 flex w-full  md:max-w-xs flex-col overflow-hidden border border-gray-100 bg-white shadow-md">
+                      <a
+                        className="relative flex h-60 overflow-hidden"
+                        href="#"
+                      >
+                        <img
+                          className="absolute top-0 right-0 h-full w-full object-cover"
+                          src="https://cache1.pakwheels.com/system/car_generation_pictures/5361/original/Corolla-X-Cars-Cropped-Pictures-for-Website.jpg?1606903674"
+                          alt="product image"
+                        />
                       </a>
-                      <div className="mt-2  flex items-center justify-between">
-                        <p>
-                          <span className="text-sm  text-slate-900">
-                            PKR:7 MILLIAN
-                          </span>
-                        </p>
+                      <div className="mt-4 px-5 pb-5">
+                        <a href="#">
+                          <h5 className="text-xl font-bold tracking-tight text-slate-900">
+                            Lululemon 1
+                          </h5>
+                        </a>
+                        <div className="mt-2  flex items-center justify-between">
+                          <p>
+                            <span className="text-sm  text-slate-900">
+                              PKR:7 MILLIAN
+                            </span>
+                          </p>
+                        </div>
+                        <h5 className="text-xl tracking-tight text-slate-900">
+                          Lahore
+                        </h5>
                       </div>
-                      <h5 className="text-xl tracking-tight text-slate-900">
-                        Lahore
-                      </h5>
                     </div>
-                  </div>
 
-                  <div className="group my-10 flex w-full max-w-xs flex-col overflow-hidden border border-gray-100 bg-white shadow-md">
-                    <a className="relative flex h-60 overflow-hidden" href="#">
-                      <img
-                        className="absolute top-0 right-0 h-full w-full object-cover"
-                        src="https://cache1.pakwheels.com/system/car_generation_pictures/5361/original/Corolla-X-Cars-Cropped-Pictures-for-Website.jpg?1606903674"
-                        alt="product image"
-                      />
-                    </a>
-                    <div className="mt-4 px-5 pb-5">
-                      <a href="#">
-                        <h5 className="text-xl font-bold tracking-tight text-slate-900">
-                          Lululemon Comfort Tee - White
-                        </h5>
+                    <div className="group   my-2 flex w-full   md:max-w-xs flex-col overflow-hidden border border-gray-100 bg-white shadow-md">
+                      <a
+                        className="relative flex h-60 overflow-hidden"
+                        href="#"
+                      >
+                        <img
+                          className="absolute top-0 right-0 h-full w-full object-cover"
+                          src="https://cache1.pakwheels.com/system/car_generation_pictures/5361/original/Corolla-X-Cars-Cropped-Pictures-for-Website.jpg?1606903674"
+                          alt="product image"
+                        />
                       </a>
-                      <div className="mt-2  flex items-center justify-between">
-                        <p>
-                          <span className="text-sm  text-slate-900">
-                            PKR:7 MILLIAN
-                          </span>
-                        </p>
+                      <div className="mt-4 px-5 pb-5">
+                        <a href="#">
+                          <h5 className="text-xl font-bold tracking-tight text-slate-900">
+                            Lululemon 2
+                          </h5>
+                        </a>
+                        <div className="mt-2  flex items-center justify-between">
+                          <p>
+                            <span className="text-sm  text-slate-900">
+                              PKR:7 MILLIAN
+                            </span>
+                          </p>
+                        </div>
+                        <h5 className="text-xl tracking-tight text-slate-900">
+                          Lahore
+                        </h5>
                       </div>
-                      <h5 className="text-xl tracking-tight text-slate-900">
-                        Lahore
-                      </h5>
                     </div>
-                  </div>
 
-                  <div className="group my-10 flex w-full max-w-xs flex-col overflow-hidden border border-gray-100 bg-white shadow-md">
-                    <a className="relative flex h-60 overflow-hidden" href="#">
-                      <img
-                        className="absolute top-0 right-0 h-full w-full object-cover"
-                        src="https://cache1.pakwheels.com/system/car_generation_pictures/5361/original/Corolla-X-Cars-Cropped-Pictures-for-Website.jpg?1606903674"
-                        alt="product image"
-                      />
-                    </a>
-                    <div className="mt-4 px-5 pb-5">
-                      <a href="#">
-                        <h5 className="text-xl font-bold tracking-tight text-slate-900">
-                          Lululemon Comfort Tee - White
-                        </h5>
+                    <div className="group   my-2 flex w-full   md:max-w-xs flex-col overflow-hidden border border-gray-100 bg-white shadow-md">
+                      <a
+                        className="relative flex h-60 overflow-hidden"
+                        href="#"
+                      >
+                        <img
+                          className="absolute top-0 right-0 h-full w-full object-cover"
+                          src="https://cache1.pakwheels.com/system/car_generation_pictures/5361/original/Corolla-X-Cars-Cropped-Pictures-for-Website.jpg?1606903674"
+                          alt="product image"
+                        />
                       </a>
-                      <div className="mt-2  flex items-center justify-between">
-                        <p>
-                          <span className="text-sm  text-slate-900">
-                            PKR:7 MILLIAN
-                          </span>
-                        </p>
+                      <div className="mt-4 px-5 pb-5">
+                        <a href="#">
+                          <h5 className="text-xl font-bold tracking-tight text-slate-900">
+                            Lululemon 3
+                          </h5>
+                        </a>
+                        <div className="mt-2  flex items-center justify-between">
+                          <p>
+                            <span className="text-sm  text-slate-900">
+                              PKR:7 MILLIAN
+                            </span>
+                          </p>
+                        </div>
+                        <h5 className="text-xl tracking-tight text-slate-900">
+                          Lahore
+                        </h5>
                       </div>
-                      <h5 className="text-xl tracking-tight text-slate-900">
-                        Lahore
-                      </h5>
                     </div>
-                  </div>
 
-                  <div className="group my-10 flex w-full max-w-xs flex-col overflow-hidden border border-gray-100 bg-white shadow-md">
-                    <a className="relative flex h-60 overflow-hidden" href="#">
-                      <img
-                        className="absolute top-0 right-0 h-full w-full object-cover"
-                        src="https://cache1.pakwheels.com/system/car_generation_pictures/5361/original/Corolla-X-Cars-Cropped-Pictures-for-Website.jpg?1606903674"
-                        alt="product image"
-                      />
-                    </a>
-                    <div className="mt-4 px-5 pb-5">
-                      <a href="#">
-                        <h5 className="text-xl font-bold tracking-tight text-slate-900">
-                          Lululemon Comfort Tee - White
-                        </h5>
+                    <div className="group   my-2 flex w-full   md:max-w-xs flex-col overflow-hidden border border-gray-100 bg-white shadow-md">
+                      <a
+                        className="relative flex h-60 overflow-hidden"
+                        href="#"
+                      >
+                        <img
+                          className="absolute top-0 right-0 h-full w-full object-cover"
+                          src="https://cache1.pakwheels.com/system/car_generation_pictures/5361/original/Corolla-X-Cars-Cropped-Pictures-for-Website.jpg?1606903674"
+                          alt="product image"
+                        />
                       </a>
-                      <div className="mt-2  flex items-center justify-between">
-                        <p>
-                          <span className="text-sm  text-slate-900">
-                            PKR:7 MILLIAN
-                          </span>
-                        </p>
+                      <div className="mt-4 px-5 pb-5">
+                        <a href="#">
+                          <h5 className="text-xl font-bold tracking-tight text-slate-900">
+                            Lululemon Comfort Tee - White
+                          </h5>
+                        </a>
+                        <div className="mt-2  flex items-center justify-between">
+                          <p>
+                            <span className="text-sm  text-slate-900">
+                              PKR:7 MILLIAN
+                            </span>
+                          </p>
+                        </div>
+                        <h5 className="text-xl tracking-tight text-slate-900">
+                          Lahore
+                        </h5>
                       </div>
-                      <h5 className="text-xl tracking-tight text-slate-900">
-                        Lahore
-                      </h5>
+                    </div>
+                  </Slider>
+                  <div>
+                    <div class="flex justify-center pb-8 ">
+                      <button class="px-4 py-1 bg-blue-500 text-white rounded-full hover:bg-green-700 transition duration-300 ease-in-out">
+                        View All
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -451,36 +586,35 @@ export default function Home() {
           </section>
 
           <section className="max-w-screen-xl mx-auto justify-center">
-            <h1 className="text-3xl font-bold text-center mb-8">
-              Tips For Selling Your Car
+            <div className="flex justify-center pb-2">
+              <span className="border rounded-full border-green-500 flex justify-center p-2  text-green-500">
+                <HiOutlineLightBulb className="text-blue-500 text-2xl" />
+              </span>
+            </div>
+            <h1 className="text-3xl font-bold text-center  text-black">
+              Tips For <span className="text-green-500">Selling</span> Your{" "}
+              <span className="text-green-500">Car</span>
             </h1>
-
-            <div className="flex flex-col md:flex-row justify-center py-8 gap-8">
-              <div className="bg-white rounded-lg shadow-md  w-full md:w-1/5">
-                <div className="bg-blue-500 rounded-t-lg mb-1">
-                  <img
-                    src="austin_image.jpg"
-                    alt="Showcase Car"
-                    className="w-full p-6  h-48 object-cover rounded-t-lg"
-                  />
-                </div>
-                <div className="p-6 flex justify-center text-center">
-                  <div className="text-center">
-                    <h2 className="text-lg text-black font-semibold mb-2">
-                      Showcase Your Car's Best Features
-                    </h2>
-                    <p className="text-gray-600 mb-2">
-                      Highlighting the best features... visually appealing...
-                    </p>
-                    <span className=" text-black hover:bg-green-700  font-bold border-b-4 border-r-4  border-green-500 rounded ">
-                      <button className=" text-black border hover:bg-green-700 font-bold  px-4 rounded ">
-                        Read More
-                      </button>
-                    </span>
-                  </div>
+            <div className="flex justify-center  text-green-500">
+              <div class="flex justify-center">
+                <div class=" border-green-500 ">
+                  ......................................
                 </div>
               </div>
             </div>
+
+           
+              <div>
+            <Slider {...slickSettings} className="">
+              {Tips.map((tip) => (
+                <TipCard
+                  title={tip.title}
+                  description={tip.description}
+                  imageSrc={tip.imageSrc}
+                  onClick={() => {}}
+                />
+              ))}</Slider></div>
+            
           </section>
 
           <section className="max-w-screen-lg mx-auto justify-center">
