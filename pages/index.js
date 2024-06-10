@@ -26,7 +26,7 @@ import "slick-carousel/slick/slick-theme.css";
 import React from "react";
 const Tips = [
   {
-    title: "Showcase Your Car's Best Features",
+    title: "Showcase Your Car's Best Features to Make a Lasting Impression",
     description: "Highlighting the best features of your car can significantly enhance its appeal to potential buyers. Clean and polish your vehicle to make it visually appealing. Take high-quality photos that showcase its exterior, interior, and notable features.",
     imageSrc: "path/to/image1.jpg" // Add appropriate image path or URL if available
   },
@@ -46,11 +46,25 @@ const Tips = [
     imageSrc: "path/to/image4.jpg" // Add appropriate image path or URL if available
   },
   {
-    title: "Set a Competitive Price",
+    title: "Set a Competitive Price to Attract Serious Buyers Quickly",
     description: "Research the market value of your car to set a competitive price. Consider factors like the car's age, mileage, condition, and current market trends. A well-priced car is more likely to attract serious buyers quickly.",
     imageSrc: "path/to/image5.jpg" // Add appropriate image path or URL if available
   }
 ];
+
+// Rendering the Tips
+<div className="flex flex-col md:flex-row justify-center py-8 gap-8">
+  {Tips.map((tip, index) => (
+    <TipCard
+      key={index}
+      title={tip.title}
+      description={tip.description}
+      imageSrc={tip.imageSrc}
+      onClick={() => {}}
+    />
+  ))}
+</div>
+
 export default function Home() {
   const router = useRouter();
   const containerRef = useRef();
@@ -611,7 +625,6 @@ export default function Home() {
                   title={tip.title}
                   description={tip.description}
                   imageSrc={tip.imageSrc}
-                  onClick={() => {}}
                 />
               ))}</Slider></div>
             
