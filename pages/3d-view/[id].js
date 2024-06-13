@@ -9,7 +9,6 @@ import Link from 'next/link';
 const ObjModel = ({ objPath, mtlPath, zoom }) => {
   const objRef = useRef();
 
-  // Load materials
   const materials = useLoader(MTLLoader, mtlPath, (loader) => {
     loader.setCrossOrigin('anonymous');
   });
