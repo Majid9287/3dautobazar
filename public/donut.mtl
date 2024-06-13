@@ -1,0 +1,22 @@
+# Blender 4.1.0 MTL File: 'Donut.blend'
+# www.blender.org
+
+newmtl Material
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /DONUT-COL.png
+map_Ns /DONUT-rough.png
+
+newmtl Material.004
+Ns 104.152885
+Ka 1.000000 1.000000 1.000000
+Kd 0.101614 0.529137 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2

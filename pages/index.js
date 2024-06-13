@@ -5,8 +5,8 @@ import TipCard from "../components/TipCard";
 import Community from "../components/Community";
 import ServiceCard from "../components/ServiceCard";
 import Hero from "../components/Hero";
-
-import { useEffect, useRef } from "react";
+import CarCard from "../components/CarCard";
+import { useState, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -67,12 +67,14 @@ const ServiceData = [
   },
   {
     title: "Loan Calculator",
-    description: "Estimate loan payments or financing options direct within the platform.",
+    description:
+      "Estimate loan payments or financing options direct within the platform.",
     imageSrc: "austin_image.jpg",
   },
   {
     title: "Car Comparison",
-    description: "Compare two cars side-by-side to help you make an informed decision.",
+    description:
+      "Compare two cars side-by-side to help you make an informed decision.",
     imageSrc: "austin_image.jpg",
   },
   {
@@ -82,9 +84,9 @@ const ServiceData = [
   },
 ];
 
-
 export default function Home() {
   const router = useRouter();
+  const[cars,setCars]=useState([]);
   const containerRef = useRef();
   const bodyColorRef = useRef();
   const detailsColorRef = useRef();
@@ -299,7 +301,57 @@ export default function Home() {
   const slickSettings = {
     slidesToShow: 4,
     slidesToScroll: 1,
+    speed: 1000,
+    useCSS: true,
+    autoplay: true,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    arrows: true,
+    pauseOnFocus: true,
+    pauseOnFocus: true,
+    infinite: false,
+    pauseOnHover: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
 
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+
+          useCSS: false,
+          autoplay: true,
+          prevArrow: null,
+          nextArrow: null,
+          arrows: false,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+
+          autoplay: true,
+          prevArrow: null,
+          nextArrow: null,
+          arrows: false,
+        },
+      },
+    ],
+  };
+
+  const slickSettings1 = {
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    speed: 3000,
     useCSS: true,
     autoplay: true,
     nextArrow: <NextArrow />,
@@ -345,6 +397,19 @@ export default function Home() {
     ],
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/ads");
+        const data = await response.json();
+        setCars(data.ads);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <>
       <NextSeo
@@ -431,7 +496,7 @@ export default function Home() {
           </section>
 
           <section className={` ${styles.gradientBg}`}>
-            <Hero/>
+            <Hero />
 
             <section className="max-w-screen-xl mx-auto px-1 justify-center ">
               <div className="flex text-black justify-center text-center">
@@ -444,129 +509,16 @@ export default function Home() {
               <div className={``}>
                 <div className="px-2">
                   <Slider {...slickSettings} className="">
-                    <div className="group   my-2 flex w-full  md:max-w-xs flex-col overflow-hidden border border-gray-100 bg-white shadow-md">
-                      <a
-                        className="relative flex h-60 overflow-hidden"
-                        href="#"
-                      >
-                        <img
-                          className="absolute top-0 right-0 h-full w-full object-cover"
-                          src="https://cache1.pakwheels.com/system/car_generation_pictures/5361/original/Corolla-X-Cars-Cropped-Pictures-for-Website.jpg?1606903674"
-                          alt="product image"
-                        />
-                      </a>
-                      <div className="mt-4 px-5 pb-5">
-                        <a href="#">
-                          <h5 className="text-xl font-bold tracking-tight text-slate-900">
-                            Lululemon 1
-                          </h5>
-                        </a>
-                        <div className="mt-2  flex items-center justify-between">
-                          <p>
-                            <span className="text-sm  text-slate-900">
-                              PKR:7 MILLIAN
-                            </span>
-                          </p>
-                        </div>
-                        <h5 className="text-xl tracking-tight text-slate-900">
-                          Lahore
-                        </h5>
-                      </div>
-                    </div>
-
-                    <div className="group   my-2 flex w-full   md:max-w-xs flex-col overflow-hidden border border-gray-100 bg-white shadow-md">
-                      <a
-                        className="relative flex h-60 overflow-hidden"
-                        href="#"
-                      >
-                        <img
-                          className="absolute top-0 right-0 h-full w-full object-cover"
-                          src="https://cache1.pakwheels.com/system/car_generation_pictures/5361/original/Corolla-X-Cars-Cropped-Pictures-for-Website.jpg?1606903674"
-                          alt="product image"
-                        />
-                      </a>
-                      <div className="mt-4 px-5 pb-5">
-                        <a href="#">
-                          <h5 className="text-xl font-bold tracking-tight text-slate-900">
-                            Lululemon 2
-                          </h5>
-                        </a>
-                        <div className="mt-2  flex items-center justify-between">
-                          <p>
-                            <span className="text-sm  text-slate-900">
-                              PKR:7 MILLIAN
-                            </span>
-                          </p>
-                        </div>
-                        <h5 className="text-xl tracking-tight text-slate-900">
-                          Lahore
-                        </h5>
-                      </div>
-                    </div>
-
-                    <div className="group   my-2 flex w-full   md:max-w-xs flex-col overflow-hidden border border-gray-100 bg-white shadow-md">
-                      <a
-                        className="relative flex h-60 overflow-hidden"
-                        href="#"
-                      >
-                        <img
-                          className="absolute top-0 right-0 h-full w-full object-cover"
-                          src="https://cache1.pakwheels.com/system/car_generation_pictures/5361/original/Corolla-X-Cars-Cropped-Pictures-for-Website.jpg?1606903674"
-                          alt="product image"
-                        />
-                      </a>
-                      <div className="mt-4 px-5 pb-5">
-                        <a href="#">
-                          <h5 className="text-xl font-bold tracking-tight text-slate-900">
-                            Lululemon 3
-                          </h5>
-                        </a>
-                        <div className="mt-2  flex items-center justify-between">
-                          <p>
-                            <span className="text-sm  text-slate-900">
-                              PKR:7 MILLIAN
-                            </span>
-                          </p>
-                        </div>
-                        <h5 className="text-xl tracking-tight text-slate-900">
-                          Lahore
-                        </h5>
-                      </div>
-                    </div>
-
-                    <div className="group   my-2 flex w-full   md:max-w-xs flex-col overflow-hidden border border-gray-100 bg-white shadow-md">
-                      <a
-                        className="relative flex h-60 overflow-hidden"
-                        href="#"
-                      >
-                        <img
-                          className="absolute top-0 right-0 h-full w-full object-cover"
-                          src="https://cache1.pakwheels.com/system/car_generation_pictures/5361/original/Corolla-X-Cars-Cropped-Pictures-for-Website.jpg?1606903674"
-                          alt="product image"
-                        />
-                      </a>
-                      <div className="mt-4 px-5 pb-5">
-                        <a href="#">
-                          <h5 className="text-xl font-bold tracking-tight text-slate-900">
-                            Lululemon Comfort Tee - White
-                          </h5>
-                        </a>
-                        <div className="mt-2  flex items-center justify-between">
-                          <p>
-                            <span className="text-sm  text-slate-900">
-                              PKR:7 MILLIAN
-                            </span>
-                          </p>
-                        </div>
-                        <h5 className="text-xl tracking-tight text-slate-900">
-                          Lahore
-                        </h5>
-                      </div>
-                    </div>
+                    {cars.map((car) => (
+                      <CarCard key={car.adId} car={car} />
+                    ))}
                   </Slider>
                   <div>
                     <div class="flex justify-center pb-8 ">
-                      <button class="px-4 py-1 bg-blue-500 text-white rounded-full hover:bg-green-700 transition duration-300 ease-in-out">
+                      <button
+                        onClick={() => router.push("/ads")}
+                        class="px-4 py-1 bg-blue-500 text-white rounded-full hover:bg-green-700 transition duration-300 ease-in-out"
+                      >
                         View All
                       </button>
                     </div>
@@ -595,7 +547,7 @@ export default function Home() {
             </div>
 
             <div>
-              <Slider {...slickSettings} className="">
+              <Slider {...slickSettings1} className="">
                 {Tips.map((tip) => (
                   <TipCard
                     title={tip.title}
