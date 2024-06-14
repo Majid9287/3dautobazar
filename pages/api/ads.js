@@ -9,14 +9,10 @@ export default async function handler(req, res) {
       const snapshot = await get(dbRef);
       const ads = [];
 
-      // Convert the Realtime Database snapshot to an array of objects
-      snapshot.forEach((userSnapshot) => {
-        const userId = userSnapshot.key;
-        userSnapshot.forEach((adSnapshot) => {
-          const adId = adSnapshot.key;
-          const adData = adSnapshot.val();
-          ads.push({ userId, adId, ...adData });
-        });
+      snapshot.forEach((adSnapshot) => {
+        const adId = adSnapshot.key;  // adId directly from the snapshot key
+        const adData = adSnapshot.val();
+        ads.push({ adId, ...adData });
       });
 
       res.status(200).json({ ads });

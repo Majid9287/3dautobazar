@@ -13,7 +13,7 @@ const CarCard = ({ car }) => {
       <div className="mt-4 px-5 pb-5">
         <a href="#">
           <h5 className="text-xl font-bold tracking-tight text-slate-900">
-            {car.carMake} {car.carModel} { car.carColor} {car.carCurrentLocation}
+            {car.adTitle}
           </h5>
         </a>
         <div className="mt-2 flex items-center justify-between">

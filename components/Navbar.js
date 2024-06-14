@@ -13,11 +13,11 @@ import {
 const menuItems = [
   {
     name: "Home",
-    href: "#",
+    href: "/",
   },
   {
     name: "Ads",
-    href: "#",
+    href: "ads",
   },
   
   {
@@ -42,7 +42,7 @@ const ExampleNavbarFour = () => {
     <div className="absolute w-full text-white ">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-2 py-2 md:py-8 sm:px-6 lg:px-2">
         <div className="inline-flex items-center space-x-2">
-        <Image width={100} height={100}  src={"/logo.png"}></Image>
+       <Link href={"/"}> <Image width={100} height={100}  src={"/logo.png"}></Image></Link>
         </div>
         <div className="hidden lg:block ml-12">
           <ul className="ml-12 inline-flex space-x-8">

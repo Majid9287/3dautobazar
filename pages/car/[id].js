@@ -171,7 +171,7 @@ export default function CarDetails() {
               </table>
 
               <button
-                onClick={() => router.push(`/car/${id}/3d`)}
+                onClick={() => router.push(`/3d-view/${id}`)}
                 className="bg-blue-500 text-white p-3 rounded-lg mb-4"
               >
                 View in 3D

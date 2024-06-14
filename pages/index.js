@@ -256,10 +256,7 @@ export default function Home() {
 
     return () => {
       window.removeEventListener("resize", onWindowResize);
-      if (renderer) {
-        renderer.dispose();
-        containerRef.current.removeChild(renderer.domElement);
-      }
+     
       if (animationId) {
         cancelAnimationFrame(animationId);
       }
