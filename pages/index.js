@@ -5,14 +5,12 @@ import TipCard from "../components/TipCard";
 import Community from "../components/Community";
 import ServiceCard from "../components/ServiceCard";
 import Hero from "../components/Hero";
+import HeroCar from "../components/3d-car";
+import CarCardSkeleton from "../components/CarCardSkeleton";
+
 import CarCard from "../components/CarCard";
 import { useState, useEffect, useRef } from "react";
-import * as THREE from "three";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import { GiClockwork } from "react-icons/gi";
-import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { HiOutlineLightBulb } from "react-icons/hi";
 import { Md3dRotation } from "react-icons/md";
@@ -29,7 +27,7 @@ import "slick-carousel/slick/slick-theme.css";
 import React from "react";
 const Tips = [
   {
-    title: "Showcase Your Car's Best Features to Make a Lasting Impression",
+    title: "Showcase Your Car's Best   Features",
     description:
       "Highlighting the best features of your car can significantly enhance its appeal to potential buyers. Clean and polish your vehicle to make it visually appealing. Take high-quality photos that showcase its exterior, interior, and notable features.",
     imageSrc: "path/to/image1.jpg", // Add appropriate image path or URL if available
@@ -53,7 +51,7 @@ const Tips = [
     imageSrc: "path/to/image4.jpg", // Add appropriate image path or URL if available
   },
   {
-    title: "Set a Competitive Price to Attract Serious Buyers Quickly",
+    title: "Set a Competitive Price to Attract Serious Buyers",
     description:
       "Research the market value of your car to set a competitive price. Consider factors like the car's age, mileage, condition, and current market trends. A well-priced car is more likely to attract serious buyers quickly.",
     imageSrc: "path/to/image5.jpg", // Add appropriate image path or URL if available
@@ -86,182 +84,7 @@ const ServiceData = [
 
 export default function Home() {
   const router = useRouter();
-  const[cars,setCars]=useState([]);
-  const containerRef = useRef();
-  const bodyColorRef = useRef();
-  const detailsColorRef = useRef();
-  const glassColorRef = useRef();
-
-  useEffect(() => {
-    let camera, scene, renderer, grid, controls;
-    const wheels = [];
-    let animationId;
-
-    const init = () => {
-      const container = containerRef.current;
-
-      renderer = new THREE.WebGLRenderer({ antialias: true });
-      renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setSize(container.clientWidth, container.clientHeight);
-      renderer.setAnimationLoop(render);
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 0.85;
-      container.appendChild(renderer.domElement);
-
-      window.addEventListener("resize", onWindowResize);
-
-      camera = new THREE.PerspectiveCamera(
-        40,
-        container.clientWidth / container.clientHeight,
-        0.1,
-        100
-      );
-      camera.position.set(4.25, 1.4, -4.5);
-
-      controls = new OrbitControls(camera, container);
-      controls.maxDistance = 9;
-      controls.maxPolarAngle = THREE.MathUtils.degToRad(90);
-      controls.target.set(0, 0.5, 0);
-      controls.update();
-
-      scene = new THREE.Scene();
-      scene.background = new THREE.Color(0x333333);
-
-      new RGBELoader().load(
-        "/venice_sunset_1k.hdr",
-        (texture) => {
-          texture.mapping = THREE.EquirectangularReflectionMapping;
-          scene.environment = texture;
-        },
-        undefined,
-        (err) => {
-          console.error("An error happened while loading the HDR texture", err);
-        }
-      );
-
-      scene.fog = new THREE.Fog(0x333333, 10, 15);
-
-      grid = new THREE.GridHelper(20, 40, 0xffffff, 0xffffff);
-      grid.material.opacity = 0.2;
-      grid.material.depthWrite = false;
-      grid.material.transparent = true;
-      scene.add(grid);
-
-      const bodyMaterial = new THREE.MeshPhysicalMaterial({
-        color: 0xff0000,
-        metalness: 1.0,
-        roughness: 0.5,
-        clearcoat: 1.0,
-        clearcoatRoughness: 0.03,
-      });
-
-      const detailsMaterial = new THREE.MeshStandardMaterial({
-        color: 0xffffff,
-        metalness: 1.0,
-        roughness: 0.5,
-      });
-
-      const glassMaterial = new THREE.MeshPhysicalMaterial({
-        color: 0xffffff,
-        metalness: 0.25,
-        roughness: 0,
-        transmission: 1.0,
-      });
-
-      bodyColorRef.current.addEventListener("input", function () {
-        bodyMaterial.color.set(this.value);
-      });
-
-      detailsColorRef.current.addEventListener("input", function () {
-        detailsMaterial.color.set(this.value);
-      });
-
-      glassColorRef.current.addEventListener("input", function () {
-        glassMaterial.color.set(this.value);
-      });
-
-      const shadow = new THREE.TextureLoader().load("/ferrari_ao.png");
-
-      const dracoLoader = new DRACOLoader();
-      dracoLoader.setDecoderPath("/gltf/");
-
-      const loader = new GLTFLoader();
-      loader.setDRACOLoader(dracoLoader);
-
-      loader.load(
-        "/ferrari.glb",
-        (gltf) => {
-          const carModel = gltf.scene.children[0];
-
-          carModel.getObjectByName("body").material = bodyMaterial;
-          carModel.getObjectByName("rim_fl").material = detailsMaterial;
-          carModel.getObjectByName("rim_fr").material = detailsMaterial;
-          carModel.getObjectByName("rim_rr").material = detailsMaterial;
-          carModel.getObjectByName("rim_rl").material = detailsMaterial;
-          carModel.getObjectByName("trim").material = detailsMaterial;
-          carModel.getObjectByName("glass").material = glassMaterial;
-
-          wheels.push(
-            carModel.getObjectByName("wheel_fl"),
-            carModel.getObjectByName("wheel_fr"),
-            carModel.getObjectByName("wheel_rl"),
-            carModel.getObjectByName("wheel_rr")
-          );
-
-          const mesh = new THREE.Mesh(
-            new THREE.PlaneGeometry(0.655 * 4, 1.3 * 4),
-            new THREE.MeshBasicMaterial({
-              map: shadow,
-              blending: THREE.MultiplyBlending,
-              toneMapped: false,
-              transparent: true,
-            })
-          );
-          mesh.rotation.x = -Math.PI / 2;
-          mesh.renderOrder = 2;
-          carModel.add(mesh);
-
-          scene.add(carModel);
-        },
-        undefined,
-        (err) => {
-          console.error("An error happened while loading the GLTF model", err);
-        }
-      );
-    };
-
-    const onWindowResize = () => {
-      camera.aspect =
-        containerRef.current.clientWidth / containerRef.current.clientHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(
-        containerRef.current.clientWidth,
-        containerRef.current.clientHeight
-      );
-    };
-
-    const render = () => {
-      controls.update();
-      const time = -performance.now() / 1000;
-
-      for (let i = 0; i < wheels.length; i++) {
-        wheels[i].rotation.x = time * Math.PI * 2;
-      }
-
-      grid.position.z = -time % 1;
-      renderer.render(scene, camera);
-    };
-
-    init();
-
-    return () => {
-      window.removeEventListener("resize", onWindowResize);
-     
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
-    };
-  }, []);
+  const [cars, setCars] = useState([]);
 
   function NextArrow(props) {
     const { className, style, onClick } = props;
@@ -422,45 +245,7 @@ export default function Home() {
       />
       <main className={`text-white bg-gray-100 top-0 `}>
         <div className="">
-          <section>
-            <div className={styles.heroSection}>
-              <div className={`hidden absolute ${styles.info}`}>
-                <br />
-                <br />
-                <span className={styles.colorPicker}>
-                  <input
-                    ref={bodyColorRef}
-                    id="body-color"
-                    type="color"
-                    defaultValue="#ff0000"
-                  />
-                  <br />
-                  Body
-                </span>
-                <span className={styles.colorPicker}>
-                  <input
-                    ref={detailsColorRef}
-                    id="details-color"
-                    type="color"
-                    defaultValue="#ffffff"
-                  />
-                  <br />
-                  Details
-                </span>
-                <span className={styles.colorPicker}>
-                  <input
-                    ref={glassColorRef}
-                    id="glass-color"
-                    type="color"
-                    defaultValue="#ffffff"
-                  />
-                  <br />
-                  Glass
-                </span>
-              </div>
-              <div ref={containerRef} className={styles.container}></div>
-            </div>
-          </section>
+          <HeroCar />
           <section className="hidden md:flex">
             <div
               className={`absolute top-0 right-0 h-[50vh]   md:h-[70vh] px-3 py-2 z-10 ${styles.gradientBg2}`}
@@ -506,9 +291,11 @@ export default function Home() {
               <div className={``}>
                 <div className="px-2">
                   <Slider {...slickSettings} className="">
-                    {cars.map((car) => (
-                      <CarCard key={car.adId} car={car} />
-                    ))}
+                    {cars && cars.length > 0
+                      ? cars.map((car) => <CarCard key={car.adId} car={car} />)
+                      : Array.from({ length: 4 }).map((_, index) => (
+                          <CarCardSkeleton key={index} />
+                        ))}
                   </Slider>
                   <div>
                     <div class="flex justify-center pb-8 ">

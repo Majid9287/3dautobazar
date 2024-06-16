@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const CarCard = ({ car }) => {
   return (
-    <div className="group my-2 rounded-lg flex w-full md:max-w-xs flex-col overflow-hidden border border-gray-100 bg-white shadow-md">
+    <div className="group my-2 rounded-lg flex w-full p-2 md:max-w-xs flex-col overflow-hidden border border-gray-100 bg-white shadow-md">
       <a className="relative flex h-60 overflow-hidden" href="#">
         <img
           className="absolute top-0 rounded-lg right-0 h-full w-full object-cover"

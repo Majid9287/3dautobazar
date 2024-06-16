@@ -1,22 +1,25 @@
-
-import React, { Suspense, useEffect, useRef } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { Canvas, useLoader } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 import Link from "next/link";
+import ProgressBar from "@ramonak/react-progress-bar";
 
-const ObjModel = ({ objPath, mtlPath, zoom }) => {
+const ObjModel = ({ objPath, mtlPath, zoom, setProgress }) => {
   const objRef = useRef();
 
   // Load materials
   const materials = useLoader(MTLLoader, mtlPath);
   materials.preload();
 
-  // Load object
+  // Load object with progress tracking
   const obj = useLoader(OBJLoader, objPath, (loader) => {
     if (materials) loader.setMaterials(materials);
+    loader.manager.onProgress = (item, loaded, total) => {
+      setProgress(Math.round((loaded / total) * 100));
+    };
   });
 
   useEffect(() => {
@@ -29,15 +32,38 @@ const ObjModel = ({ objPath, mtlPath, zoom }) => {
 };
 
 const ThreeDModel = ({ modelPath, mtlPath, height, width, zoom }) => {
+  const [progress, setProgress] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (progress === 100) {
+      setLoading(false);
+    }
+  }, [progress]);
+
   return (
-    <Canvas style={{ height: height, width: width }}>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[0, 10, 5]} intensity={1} />
-      <Suspense fallback={null}>
-        <ObjModel objPath={modelPath} mtlPath={mtlPath} zoom={zoom} />
-      </Suspense>
-      <OrbitControls enableZoom={true} enablePan={true} />
-    </Canvas>
+    <div style={{ position: 'relative', height, width }}>
+    {loading && (
+  <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/6"> 
+    <ProgressBar className="" completed={progress} borderRadius="0px" bgColor="#0e7a04" />
+    <div className="flex justify-center text-center">
+    <p>Loading {progress}%</p>
+  </div> </div>
+)}
+      <Canvas style={{ height: '100%', width: '100%' }}>
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[0, 10, 5]} intensity={1} />
+        <Suspense fallback={null}>
+          <ObjModel
+            objPath={modelPath}
+            mtlPath={mtlPath}
+            zoom={zoom}
+            setProgress={setProgress}
+          />
+        </Suspense>
+        <OrbitControls enableZoom={true} enablePan={true} />
+      </Canvas>
+    </div>
   );
 };
 
@@ -55,24 +81,17 @@ const ThreeDViewPage = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">3D View of Car</h1>
-      <ThreeDModel
-        modelPath={modelData.objPath}
-        mtlPath={modelData.mtlPath}
-        height="100vh" // Use full viewport height
-        width="100vw" // Use full viewport width
-        zoom={modelData.zoom}
-      />
-      <div className="mt-4">
-        <Link
-          href={`/car-details/${id}`}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-        >
-          Back to Details
-        </Link>
+    <section className="max-w-screen-xl mx-auto justify-center">
+      <div className="container mx-auto p-4">
+        <ThreeDModel
+          modelPath={modelData.objPath}
+          mtlPath={modelData.mtlPath}
+          height="100vh" // Use full viewport height
+          width="95vw" // Use full viewport width
+          zoom={modelData.zoom}
+        />
       </div>
-    </div>
+    </section>
   );
 };
 
