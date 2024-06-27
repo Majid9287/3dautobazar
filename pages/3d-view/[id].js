@@ -2,36 +2,50 @@ import React, { Suspense, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { Canvas, useLoader } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
-import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
-import Link from "next/link";
+import { PLYLoader } from "three/examples/jsm/loaders/PLYLoader";
+import { TextureLoader } from "three";
 import ProgressBar from "@ramonak/react-progress-bar";
+import * as THREE from "three";
+import Skeleton from "../../components/3dSkeleton";
 
-const ObjModel = ({ objPath, mtlPath, zoom, setProgress }) => {
-  const objRef = useRef();
+const PLYModel = ({ plyPath, texturePath, zoom, setProgress }) => {
+  const modelRef = useRef();
 
-  // Load materials
-  const materials = useLoader(MTLLoader, mtlPath);
-  materials.preload();
+  // Load texture
+  const texture = useLoader(TextureLoader, texturePath);
 
-  // Load object with progress tracking
-  const obj = useLoader(OBJLoader, objPath, (loader) => {
-    if (materials) loader.setMaterials(materials);
+  // Load PLY model with progress tracking
+  const model = useLoader(PLYLoader, plyPath, (loader) => {
     loader.manager.onProgress = (item, loaded, total) => {
       setProgress(Math.round((loaded / total) * 100));
     };
   });
 
   useEffect(() => {
-    if (objRef.current) {
-      objRef.current.scale.set(zoom, zoom, zoom);
+    if (model && modelRef.current) {
+      if (model.isBufferGeometry) {
+        const material = new THREE.MeshStandardMaterial({ map: texture });
+        const mesh = new THREE.Mesh(model, material);
+        mesh.scale.set(zoom, zoom, zoom);
+        modelRef.current.add(mesh);
+      } else {
+        model.traverse((child) => {
+          if (child.isMesh) {
+            child.scale.set(zoom, zoom, zoom);
+            if (texture) {
+              child.material.map = texture;
+              child.material.needsUpdate = true;
+            }
+          }
+        });
+      }
     }
-  }, [obj, zoom]);
+  }, [model, texture, zoom]);
 
-  return <primitive ref={objRef} object={obj} />;
+  return <group ref={modelRef} />;
 };
 
-const ThreeDModel = ({ modelPath, mtlPath, height, width, zoom }) => {
+const ThreeDModel = ({ modelPath, texturePath, height, width, zoom }) => {
   const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(true);
 
@@ -42,21 +56,26 @@ const ThreeDModel = ({ modelPath, mtlPath, height, width, zoom }) => {
   }, [progress]);
 
   return (
-    <div style={{ position: 'relative', height, width }}>
-    {loading && (
-  <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/6"> 
-    <ProgressBar className="" completed={progress} borderRadius="0px" bgColor="#0e7a04" />
-    <div className="flex justify-center text-center">
-    <p>Loading {progress}%</p>
-  </div> </div>
-)}
-      <Canvas style={{ height: '100%', width: '100%' }}>
+    <div style={{ position: "relative", height, width }}>
+      {loading && (
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/6">
+          <ProgressBar
+            completed={progress}
+            borderRadius="0px"
+            bgColor="#0e7a04"
+          />
+          <div className="flex justify-center text-center">
+            <p>Loading {progress}%</p>
+          </div>
+        </div>
+      )}
+      <Canvas style={{ height: "100%", width: "100%" }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[0, 10, 5]} intensity={1} />
         <Suspense fallback={null}>
-          <ObjModel
-            objPath={modelPath}
-            mtlPath={mtlPath}
+          <PLYModel
+            plyPath={modelPath}
+            texturePath={texturePath}
             zoom={zoom}
             setProgress={setProgress}
           />
@@ -70,27 +89,62 @@ const ThreeDModel = ({ modelPath, mtlPath, height, width, zoom }) => {
 const ThreeDViewPage = () => {
   const router = useRouter();
   const { id } = router.query;
+  const [modelData, setModelData] = useState(null);
 
-  // Fetch the model data based on the id
-  const modelData = {
-    objPath:
-      "https://firebasestorage.googleapis.com/v0/b/dautobazaar.appspot.com/o/3dModels%2Fdonut.obj?alt=media&token=c93e930a-69f6-4726-ab19-f955caa7023d",
-    mtlPath:
-      "https://firebasestorage.googleapis.com/v0/b/dautobazaar.appspot.com/o/3dModels%2Fdonut.mtl?alt=media&token=01ae6c68-2357-4e5a-b306-98636d2491d6",
-    zoom: 25, // Adjust zoom to make the object appear larger initially
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    if (id) {
+      // Fetch the model data based on the id
+      fetchModelData(id).then((data) => {
+        setModelData({
+          modelPath: data.modelPath,
+          texturePath: data.texturePath,
+          zoom: data.zoom,
+        });
+      });
+    }
+  }, [id]);
+
+  const fetchModelData = async (id) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/ads-details?adId=${id}`);
+      const data = await response.json();
+      if (data) {
+        setLoading(false);
+        return {
+          modelPath: data.ad.model?.model, // Ensure this matches the actual API response
+          texturePath: data.ad.model?.texture, // Ensure this matches the actual API response
+          zoom: 5, // Default zoom to 25 if not provided
+        };
+      } else {
+        console.error("Data not found");
+        setLoading(false);
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setLoading(false);
+      return null;
+    }
   };
 
+ 
   return (
     <section className="max-w-screen-xl mx-auto justify-center">
-      <div className="container mx-auto p-4">
-        <ThreeDModel
-          modelPath={modelData.objPath}
-          mtlPath={modelData.mtlPath}
-          height="100vh" // Use full viewport height
-          width="95vw" // Use full viewport width
-          zoom={modelData.zoom}
-        />
-      </div>
+      {loading ? (
+        <Skeleton />
+      ) : (
+        <div className="container mx-auto p-4">
+          <ThreeDModel
+            modelPath={modelData.modelPath}
+            texturePath={modelData.texturePath}
+            height="100vh"
+            width="90vw"
+            zoom={modelData.zoom}
+          />
+        </div>
+      )}
     </section>
   );
 };

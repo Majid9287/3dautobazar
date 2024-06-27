@@ -11,6 +11,17 @@ module.exports = {
   theme: {
     
     extend: {
+      animation: {
+        'spin-slow': 'spin 3s linear infinite',
+        'gradient': 'gradient-animation 3s ease infinite',
+      },
+      keyframes: {
+        'gradient-animation': {
+          '0%': { 'background-position': '0% 50%' },
+          '50%': { 'background-position': '100% 50%' },
+          '100%': { 'background-position': '0% 50%' },
+        },
+      },
       colors: {
         "purple-1": "#7857FF",
         "purple-2": "#1D1928",
