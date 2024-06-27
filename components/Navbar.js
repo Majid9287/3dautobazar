@@ -17,7 +17,7 @@ const menuItems = [
   },
   {
     name: "Ads",
-    href: "ads",
+    href: "/ads",
   },
   
   {
