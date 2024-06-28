@@ -27,58 +27,58 @@ import "slick-carousel/slick/slick-theme.css";
 import React from "react";
 const Tips = [
   {
-    title: "Showcase Your Car's Best   Features",
+    title: "Showcase Your Car's Best Unique Features",
     description:
       "Highlighting the best features of your car can significantly enhance its appeal to potential buyers. Clean and polish your vehicle to make it visually appealing. Take high-quality photos that showcase its exterior, interior, and notable features.",
-    imageSrc: "path/to/image1.jpg", // Add appropriate image path or URL if available
+    imageSrc: "/images/new/Show-best-features-of-your-car.jpg", // Add appropriate image path or URL if available
   },
   {
     title: "Provide Comprehensive Maintenance Records",
     description:
       "Buyers often seek reassurance about the condition and history of a used car. Having detailed maintenance records can instill confidence in potential buyers and set your listing apart.",
-    imageSrc: "path/to/image2.jpg", // Add appropriate image path or URL if available
+    imageSrc: "/images/new/show-maintainance-record.jpg", // Add appropriate image path or URL if available
   },
   {
     title: "Create a Thorough and Honest Listing",
     description:
       "Craft a detailed and transparent listing that provides potential buyers with all the information they need. Be honest about the condition of your car, including any imperfections or issues it may have.",
-    imageSrc: "path/to/image3.jpg", // Add appropriate image path or URL if available
+    imageSrc: "/images/new/create-thorough-and-honest-listing.jpg", // Add appropriate image path or URL if available
   },
   {
     title: "List Proper Images for Better 3D Models",
     description:
       "For a high-quality 3D model, take comprehensive images of your car from multiple angles. Ensure you capture every aspect, including the front, back, sides, top, and interior. Clear, well-lit photos help in creating an accurate and appealing 3D representation, making your listing more attractive to potential buyers.",
-    imageSrc: "path/to/image4.jpg", // Add appropriate image path or URL if available
+    imageSrc: "/images/new/list-proper-images-for-better-3d-models.png", // Add appropriate image path or URL if available
   },
   {
-    title: "Set a Competitive Price to Attract Serious Buyers",
+    title: "Set a Competitive Price to Attract Buyers",
     description:
       "Research the market value of your car to set a competitive price. Consider factors like the car's age, mileage, condition, and current market trends. A well-priced car is more likely to attract serious buyers quickly.",
-    imageSrc: "path/to/image5.jpg", // Add appropriate image path or URL if available
+    imageSrc: "/images/new/set-competitve-price.jpg", // Add appropriate image path or URL if available
   },
 ];
 const ServiceData = [
   {
     title: "Sell Your Car With 3D View",
     description: "Sell Your Car with 100% free and 3D View On AutoBazar",
-    imageSrc: "./images/sell.png",
+    imageSrc: "./images/new/3dview-removebg-preview.png",
   },
   {
     title: "Loan Calculator",
     description:
       "Estimate loan payments or financing options direct within the platform.",
-    imageSrc: "austin_image.jpg",
+    imageSrc: "./images/new/loan_calculator-removebg-preview.png",
   },
   {
     title: "Car Comparison",
     description:
       "Compare two cars side-by-side to help you make an informed decision.",
-    imageSrc: "austin_image.jpg",
+    imageSrc: "./images/new/cars_comparison-removebg-preview.png",
   },
   {
     title: "Live Chat Support",
     description: "Engage in real-time chat support with direct sellers.",
-    imageSrc: "austin_image.jpg",
+    imageSrc: "./images/new/live_chat_support-removebg-preview.png",
   },
 ];
 
@@ -130,6 +130,7 @@ export default function Home() {
     pauseOnFocus: true,
     pauseOnFocus: true,
     infinite: false,
+    dots: true,
     pauseOnHover: true,
     responsive: [
       {
@@ -174,6 +175,7 @@ export default function Home() {
     speed: 3000,
     useCSS: true,
     autoplay: true,
+    dots: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     arrows: true,
@@ -298,7 +300,7 @@ export default function Home() {
                         ))}
                   </Slider>
                   <div>
-                    <div class="flex justify-center pb-8 ">
+                    <div class="flex justify-center py-8 ">
                       <button
                         onClick={() => router.push("/ads")}
                         class="px-4 py-1 bg-blue-500 text-white rounded-full hover:bg-green-700 transition duration-300 ease-in-out"

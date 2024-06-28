@@ -19,7 +19,7 @@ function TipCard({ title, description, imageSrc }) {
     <div className="w-full">
       <div className="bg-white rounded-lg shadow-md m-2 relative">
         <div className="bg-blue-500 rounded-t-lg mb-1">
-          <img src={imageSrc} alt={title} className="w-full p-6 h-48 object-cover rounded-t-lg" />
+          <img src={imageSrc} alt={title} className="w-full  p-6 h-48 object-cover rounded-t-lg rounded-full" />
         </div>
         <div className="p-6 flex justify-center text-center relative">
           <div className="text-center">
