@@ -61,9 +61,9 @@ const DownloadApp = () => {
             <h2 className="text-3xl font-bold mb-6">App Screenshots</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <Image src="/images/app-screenshot-1.png" width={300} height={600} alt="App Screenshot 1" className="rounded-lg mx-auto" />
-            <Image src="/images/app-screenshot-2.png" width={300} height={600} alt="App Screenshot 2" className="rounded-lg mx-auto" />
-            <Image src="/images/app-screenshot-3.png" width={300} height={600} alt="App Screenshot 3" className="rounded-lg mx-auto" />
+            <Image src="/images/4.jpg" width={300} height={600} alt="App Screenshot 1" className="rounded-lg mx-auto" />
+            <Image src="/images/3.jpg" width={300} height={600} alt="App Screenshot 2" className="rounded-lg mx-auto" />
+            <Image src="/images/2.jpg" width={300} height={600} alt="App Screenshot 3" className="rounded-lg mx-auto" />
           </div>
         </section>
       </main>
