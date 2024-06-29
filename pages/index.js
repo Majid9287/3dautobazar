@@ -260,7 +260,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="absolute w-full px-1 z-50 md:left-1/2 md:transform md:-translate-x-1/2 -mt-5 ">
+          <section className="absolute w-full px-1 z-10 md:left-1/2 md:transform md:-translate-x-1/2 -mt-5 ">
             <div className="flex justify-center text-center text-black ">
               <div className=" flex justify-center text-center gap-1 md:gap-2">
                 <div className="flex py-1 md:py-2  text-center border rounded-full px-5 bg-white">

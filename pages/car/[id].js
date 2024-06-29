@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import CarDetailsSkeleton from "../../components/CarDetailsSkeleton";
 import {
   FaPhone,
@@ -167,12 +168,13 @@ export default function CarDetails() {
                       </tr>
                     </tbody>
                   </table>
+                  {car?.model?.model?
                   <button
                     onClick={() => router.push(`/3d-view/${id}`)}
                     className="bg-blue-500 text-white p-3 rounded-lg mb-4"
                   >
                     View in 3D
-                  </button>
+                  </button>:<><div><h2 className="text-red-500">3D View not available</h2></div></>}
                   <h2 className="text-2xl font-bold mb-4">Contact Seller</h2>
                   <div className="flex items-center space-x-4 mb-4">
                     <img
@@ -192,8 +194,8 @@ export default function CarDetails() {
                       </div>
                     </div>
                   </div>
-                  <button className="bg-green-500 text-white p-3 rounded-lg mr-2">Call</button>
-                  <button className="bg-blue-500 text-white p-3 rounded-lg">Chat</button>
+                 <Link href="/app-download"> <button className="bg-green-500 text-white p-3 rounded-lg mr-2">Call</button></Link>
+                 <Link href="/app-download"> <button className="bg-blue-500 text-white p-3 rounded-lg">Chat</button></Link>
                 </div>
               </div>
             </div>
