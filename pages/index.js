@@ -81,11 +81,24 @@ const ServiceData = [
     imageSrc: "./images/new/live_chat_support-removebg-preview.png",
   },
 ];
-
+const Cars = ["Suzuki", "Toyota", "Honda"]; // Add all Pakistani car names here
+const years = ["2020", "2021", "2022", "2023"];
+const colors = ["Red", "Blue", "Green", "Black", "White"];
 export default function Home() {
   const router = useRouter();
   const [cars, setCars] = useState([]);
+  const [showFilters, setShowFilters] = useState(false);
+  const [selectedCar, setSelectedCar] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
+  const [inputValue, setInputValue] = useState('');
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    router.push(`/search?q=${inputValue}`);
+  };
+
+  
   function NextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -219,17 +232,42 @@ export default function Home() {
     ],
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/ads");
-        const data = await response.json();
-        setCars(data.ads);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  const handleFilterToggle = () => {
+    setShowFilters(!showFilters);
+  };
 
+  const handleCancel = () => {
+    setSelectedCar('');
+    setSelectedYear('');
+    setSelectedColor('');
+    setShowFilters(false);
+  };
+
+  const handleApply = () => {
+    fetchData();
+    setShowFilters(false);
+  };
+
+ 
+
+  const fetchData = async () => {
+    
+    try {
+      const params = new URLSearchParams();
+      if (selectedCar) params.append('model', selectedCar);
+      if (selectedYear) params.append('year', selectedYear);
+      if (selectedColor) params.append('color', selectedColor);
+
+      const response = await fetch(`/api/ads?${params.toString()}`);
+      const data = await response.json();
+      setCars(data.ads);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+   
+  };
+
+  useEffect(() => {
     fetchData();
   }, []);
   return (
@@ -260,23 +298,105 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="absolute w-full px-1 z-10 md:left-1/2 md:transform md:-translate-x-1/2 -mt-5 ">
-            <div className="flex justify-center text-center text-black ">
-              <div className=" flex justify-center text-center gap-1 md:gap-2">
-                <div className="flex py-1 md:py-2  text-center border rounded-full px-5 bg-white">
-                  <IoSearchSharp className="text-4xl" />
+          <section className="absolute w-full px-1 z-10  -mt-5">
+            <div className="flex justify-center text-center text-black">
+              <div className="flex justify-center text-center gap-1 md:gap-2">
+                <div className="flex py-1 md:py-2 text-center border rounded-full px-5 bg-white">
+                  <IoSearchSharp className="text-4xl" onClick={(e)=>{handleSearch(e)}} />
+                  <form onSubmit={handleSearch} className="">
                   <input
                     type="text"
                     placeholder="Search Make or Model..."
-                    className="w-full text-black md:w-80 px-1 h-10  "
-                  />
+                    className="w-full text-black md:w-80 px-1 h-10"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                  /></form>
                 </div>
-                <div className=" text-gray-900 py-1 md:py-2 border rounded-full px-5 flex justify-center gap-3 text-center bg-white">
+                <div
+                  className="text-gray-900 py-1 md:py-2 border rounded-full px-5 flex justify-center gap-3 text-center bg-white cursor-pointer"
+                  onClick={handleFilterToggle}
+                >
                   <div className="text-lg pt-1">Filters</div>
                   <IoMdOptions className="flex text-4xl" />
                 </div>
               </div>
             </div>
+            {showFilters && (
+              <div className="absolute top-16  text-black w-full">
+                <div className="flex justify-center content-center">
+                <div className="bg-white text-black shadow-lg rounded-lg  p-5 md:w-1/2">
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-col">
+                    <label htmlFor="car" className="font-semibold">
+                      Car
+                    </label>
+                    <select
+                      id="car"
+                      className="border text-black rounded p-2"
+                      value={selectedCar}
+                      onChange={(e) => setSelectedCar(e.target.value)}
+                    >
+                      <option value="">Select Car</option>
+                      {Cars.map((car) => (
+                        <option key={car} value={car}>
+                          {car}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="flex text-black flex-col">
+                    <label htmlFor="year" className="font-semibold">
+                      Year
+                    </label>
+                    <select
+                      id="year"
+                      className="border rounded p-2"
+                      value={selectedYear}
+                      onChange={(e) => setSelectedYear(e.target.value)}
+                    >
+                      <option value="">Select Year</option>
+                      {years.map((year) => (
+                        <option key={year} value={year}>
+                          {year}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="flex text-black flex-col">
+                    <label htmlFor="color" className="font-semibold">
+                      Color
+                    </label>
+                    <select
+                      id="color"
+                      className="border rounded p-2"
+                      value={selectedColor}
+                      onChange={(e) => setSelectedColor(e.target.value)}
+                    >
+                      <option value="">Select Color</option>
+                      {colors.map((color) => (
+                        <option key={color} value={color}>
+                          {color}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="flex justify-end gap-4">
+                    <button
+                      className="px-4 py-2 border rounded bg-gray-200"
+                      onClick={handleCancel}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="px-4 py-2 border rounded bg-blue-600 text-white"
+                      onClick={handleApply}
+                    >
+                      Apply
+                    </button>
+                  </div>
+                </div>
+              </div></div></div>
+            )}
           </section>
 
           <section className={` ${styles.gradientBg}`}>

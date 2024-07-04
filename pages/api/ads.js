@@ -5,15 +5,39 @@ import { ref, get } from 'firebase/database';
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     try {
+      const { model, color, year, sort } = req.query;
+
       const dbRef = ref(db, 'ads');
       const snapshot = await get(dbRef);
-      const ads = [];
+      let ads = [];
 
       snapshot.forEach((adSnapshot) => {
-        const adId = adSnapshot.key;  // adId directly from the snapshot key
+        const adId = adSnapshot.key;
         const adData = adSnapshot.val();
         ads.push({ adId, ...adData });
       });
+
+      // Apply filters
+      if (model) {
+        ads = ads.filter(ad => ad.carModel === model);
+      }
+      if (year) {
+        ads = ads.filter(ad => ad.carRegYear === year);
+      }
+      if (color) {
+        ads = ads.filter(ad => ad.carColor === color);
+      }
+
+      // Apply sorting
+      if (sort === 'priceAsc') {
+        ads.sort((a, b) => a.price - b.price);
+      } else if (sort === 'priceDesc') {
+        ads.sort((a, b) => b.price - a.price);
+      } else if (sort === 'yearAsc') {
+        ads.sort((a, b) => a.carRegYear - b.carRegYear);
+      } else if (sort === 'yearDesc') {
+        ads.sort((a, b) => b.carRegYear - a.carRegYear);
+      }
 
       res.status(200).json({ ads });
     } catch (error) {

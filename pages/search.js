@@ -1,26 +1,35 @@
-import { useState, useEffect } from "react";
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { FaSort, FaFilter } from "react-icons/fa";
-import { FiSearch } from "react-icons/fi";
 import styles from "@/styles/Color.module.css";
+import { FaRegSadCry } from "react-icons/fa";
 import CarCard from "../components/CarCard";
 import CarCardSkeleton from "../components/CarCardSkeleton";
-import { FaRegSadCry } from "react-icons/fa";
-import { useRouter } from "next/navigation";
+
 const Cars = ["Suzuki", "Toyota", "Honda"];
 const years = ["2020", "2021", "2022", "2023"];
 const colors = ["Red", "Blue", "Green", "Black", "White"];
+
 export default function Home() {
   const router = useRouter();
-  const [sortOption, setSortOption] = useState("");
+  const { query } = router;
+  
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortOption, setSortOption] = useState("");
   const [filterOption, setFilterOption] = useState("");
   const [cars, setCars] = useState([]);
-  const [inputValue, setInputValue] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const [selectedCar, setSelectedCar] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
-  
+
+  useEffect(() => {
+    if (query.q) {
+      setSearchQuery(query.q);
+    }
+  }, [query]);
+
   const handleFilterToggle = () => {
     setShowFilters(!showFilters);
   };
@@ -33,65 +42,42 @@ export default function Home() {
   };
 
   const handleApply = () => {
-    fetchData();
+    const filters = {};
+    if (selectedCar) filters.carModel = selectedCar;
+    if (selectedYear) filters.carRegYear = selectedYear;
+    if (selectedColor) filters.carColor = selectedColor;
+    if (searchQuery) filters.q = searchQuery;
+
+    router.push({
+      pathname: '/search',
+      query: { ...filters }
+    });
     setShowFilters(false);
   };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    router.push(`/search?q=${inputValue}`);
-  };
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams();
-      if (selectedCar) params.append('model', selectedCar);
-      if (selectedYear) params.append('year', selectedYear);
-      if (selectedColor) params.append('color', selectedColor);
-      if (sortOption) params.append('sort', sortOption);
-
-      const response = await fetch(`/api/ads?${params.toString()}`);
-      const data = await response.json();
-      setCars(data.ads);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-    setLoading(false);
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const queryParams = new URLSearchParams(query).toString();
+        const response = await fetch(`/api/search?${queryParams}`);
+        const data = await response.json();
+        setCars(data.ads);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+      setLoading(false);
+    };
+
     fetchData();
-  }, [sortOption]);
+  }, [query]);
 
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Hero Section */}
-      <section className={` text-gray-700 py-20 ${styles.gradientBg3}`}>
-        <div className="container pt-8 mx-auto px-6 text-center">
-          <h1 className="text-5xl font-bold mb-2">Find Your Dream Car</h1>
-          <p className="text-xl mb-8">
-            Browse through thousands of car listings
-          </p>
-          <div className="flex justify-center items-center max-w-lg mx-auto">
-            <form onSubmit={handleSearch} className="">
-              <input
-                type="text"
-                placeholder="Search Make or Model..."
-                className="w-full p-3 rounded-l-lg focus:outline-none"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-              />
-            </form>
-            <button className="bg-blue-500 p-3 rounded-r-lg text-white">
-              <FiSearch
-                size={24}
-                onClick={(e) => {
-                  handleSearch(e);
-                }}
-              />
-            </button>
-          </div>
+      <section className={`text-gray-700 ${styles.gradientBg3}`}>
+        <div className="container mx-auto flex justify-center content-center text-center">
+          <img src="/images/search.png" alt="Respond to Inquiries" className="" />
         </div>
       </section>
 
@@ -116,11 +102,12 @@ export default function Home() {
             <option value="yearAsc">Year (Old to New)</option>
             <option value="yearDesc">Year (New to Old)</option>
           </select>
-        </div>{showFilters && (
+        </div>
+        {showFilters && (
           <div className="absolute top-16 bg-white shadow-lg rounded-lg p-5 w-full md:w-1/2">
             <div className="flex flex-col gap-4">
               <div className="flex flex-col">
-                <label htmlFor="car" className="font-semibold">Car Model</label>
+                <label htmlFor="car" className="font-semibold">Car</label>
                 <select id="car" className="border rounded p-2" value={selectedCar} onChange={(e) => setSelectedCar(e.target.value)}>
                   <option value="">Select Car</option>
                   {Cars.map((car) => (
@@ -170,6 +157,7 @@ export default function Home() {
             <FaRegSadCry className="text-8xl"/>
           </div>
         </div>
+        
         )}
       </section>
     </div>
