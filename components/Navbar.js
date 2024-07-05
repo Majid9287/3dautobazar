@@ -7,7 +7,9 @@ import { IoMdClose } from "react-icons/io";
 
 const menuItems = [
   { name: "Home", href: "/" },
-  { name: "Ads", href: "/ads" },
+  { name: "Motors", href: "/ads" },
+  { name: "App", href: "/app-download" },
+  
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
 ];
@@ -34,12 +36,12 @@ const ExampleNavbarFour = () => {
           <ul className="ml-12 inline-flex space-x-8">
             {menuItems.map((item) => (
               <li key={item.name}>
-                <a
+                <Link
                   href={item.href}
-                  className={`inline-flex items-center text-sm font-semibold text-white-800  ${isHomePage ? "text-white hover:text-white-900" : "text-gray-700 hover:text-gray-900"}`}
+                  className={`inline-flex items-center text-lg font-bold text-white-800  ${isHomePage ? "text-white hover:text-white-900" : "text-gray-700 hover:text-gray-900"}`}
                 >
                   {item.name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -74,15 +76,15 @@ const ExampleNavbarFour = () => {
                 <div className="mt-6">
                   <nav className="grid text-black gap-y-4">
                     {menuItems.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
                         href={item.href}
                         className="-m-3 flex items-center rounded-md p-3 text-sm font-semibold hover:bg-gray-50"
                       >
-                        <span className="ml-3 text-base font-medium text-white-900">
+                        <span className="ml-3 text-lg font-bold text-white-900">
                           {item.name}
                         </span>
-                      </a>
+                      </Link>
                     ))}
                   </nav>
                 </div>

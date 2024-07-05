@@ -27,7 +27,7 @@ function contact() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch("/api/message/add-messege", {
+      const response = await fetch("/api/sms", {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
