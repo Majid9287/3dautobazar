@@ -6,7 +6,6 @@ import { PLYLoader } from "three/examples/jsm/loaders/PLYLoader";
 import { TextureLoader } from "three";
 import ProgressBar from "@ramonak/react-progress-bar";
 import * as THREE from "three";
-import Skeleton from "./components/3dSkeleton";
 import Link from "next/link";
 const PLYModel = ({ plyPath, texturePath, zoom, setProgress,setModelLoaded  }) => {
   const modelRef = useRef();
@@ -87,7 +86,7 @@ const ThreeDViewPage = () => {
   return (
     <section className="max-w-screen-xl mx-auto justify-center">
       {loading ? (
-        <Skeleton />
+        <div>Loading</div>
       ) : (
         <div className="container mx-auto p-4">
           <div style={{ position: "relative", height: "100vh", width: "90vw" }}>
