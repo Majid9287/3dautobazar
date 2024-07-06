@@ -8,7 +8,7 @@ import ProgressBar from "@ramonak/react-progress-bar";
 import * as THREE from "three";
 import Skeleton from "../../components/3dSkeleton";
 
-const PLYModel = ({ plyPath, texturePath, zoom, setProgress }) => {
+const PLYModel = ({ plyPath, texturePath, zoom, setProgress,setModelLoaded  }) => {
   const modelRef = useRef();
 
   // Load texture
@@ -19,6 +19,10 @@ const PLYModel = ({ plyPath, texturePath, zoom, setProgress }) => {
     loader.manager.onProgress = (item, loaded, total) => {
       setProgress(Math.round((loaded / total) * 100));
     };
+
+    loader.manager.onLoad = () => {
+      setModelLoaded(true); // Set modelLoaded to true when the model is loaded
+    };  
   });
 
   useEffect(() => {
@@ -44,6 +48,7 @@ const ThreeDViewPage = () => {
   const [modelData, setModelData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [modelLoaded, setModelLoaded] = useState(false); // Add state for model loaded
   useEffect(() => {
     const progressValues = [5, 25, 50, 75, 85];
     let index = 0;
@@ -95,7 +100,7 @@ const ThreeDViewPage = () => {
       ) : (
         <div className="container mx-auto p-4">
           <div style={{ position: "relative", height: "100vh", width: "90vw" }}>
-            {!modelData && (
+            {!modelLoaded && (
               <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-12 md:px-0 md:w-1/6">
                 <ProgressBar
                   completed={progress}
@@ -116,6 +121,7 @@ const ThreeDViewPage = () => {
                   texturePath={modelData.texturePath}
                   zoom={modelData.zoom}
                   setProgress={setProgress}
+                  setModelLoaded={setModelLoaded} // Pass the setModelLoaded function
                 />
               </Suspense>
               <OrbitControls enableZoom={true} enablePan={true} />
