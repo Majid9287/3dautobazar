@@ -9,7 +9,6 @@ import * as THREE from "three";
 import Skeleton from "../../components/3dSkeleton";
 
 const PLYModel = ({ plyPath, texturePath, zoom, setProgress }) => {
- 
   const modelRef = useRef();
 
   // Load texture
@@ -96,7 +95,7 @@ const ThreeDViewPage = () => {
       ) : (
         <div className="container mx-auto p-4">
           <div style={{ position: "relative", height: "100vh", width: "90vw" }}>
-            {progress < 100 && (
+            {!modelData && (
               <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-12 md:px-0 md:w-1/6">
                 <ProgressBar
                   completed={progress}
