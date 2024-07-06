@@ -1,6 +1,6 @@
 // pages/api-guide.js
 import { useState } from "react";
-
+import Link from "next/link";
 import styles from "@/styles/Color.module.css";
 export default function ApiGuide() {
   const [copied, setCopied] = useState(false);
@@ -25,8 +25,10 @@ export default function ApiGuide() {
 
         <h2 className="text-xl font-semibold mb-4">API Endpoint</h2>
         <p className="mb-4">
-          <strong>POST</strong>  <pre className="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mb-6">
-          <code>{apiUrl}</code></pre>
+          <strong>POST</strong>{" "}
+          <pre className="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mb-6">
+            <code>{apiUrl}</code>
+          </pre>
         </p>
 
         <h2 className="text-xl font-semibold mb-4">Request Format</h2>
@@ -79,24 +81,48 @@ try {
         </div>
         <h2 className="text-xl font-semibold mb-4">Examples</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white p-4 rounded-lg shadow-md">
-          
-            <img src="/images/exm3.jpg" alt="Example 1" className="mb-4 w-full h-60 object-cover rounded-lg"/>
-            <p className="text-gray-700 mb-4">Uploading multiple 2D images to generate a more detailed 3D model.</p>
-            
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-md">
-           
-            <img src="/images/exm2.jpg" alt="Example 2" className="mb-4 w-full h-60 object-cover rounded-lg"/>
-            <p className="text-gray-700 mb-4">Uploading multiple 2D images to generate a more detailed 3D model.</p>
-           
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-md">
-            
-            <img src="/images/exm1.jpg" alt="Example 3" className="mb-4 w-full h-60 object-cover rounded-lg"/>
-            <p className="text-gray-700 mb-4">Uploading multiple 2D images to generate a more detailed 3D model.</p>
-            
-          </div>
+          <Link href="/example1">
+            {" "}
+            <div className="bg-white p-4 rounded-lg shadow-md">
+              <img
+                src="/images/exm3.jpg"
+                alt="Example 1"
+                className="mb-4 w-full h-60 object-cover rounded-lg"
+              />
+              <p className="text-gray-700 mb-4">
+                Uploading multiple 2D images to generate a more detailed 3D
+                model.
+              </p>
+            </div>
+          </Link>
+          <Link href="/example2">
+            {" "}
+            <div className="bg-white p-4 rounded-lg shadow-md">
+              <img
+                src="/images/exm2.jpg"
+                alt="Example 2"
+                className="mb-4 w-full h-60 object-cover rounded-lg"
+              />
+              <p className="text-gray-700 mb-4">
+                Uploading multiple 2D images to generate a more detailed 3D
+                model.
+              </p>
+            </div>
+          </Link>
+          <Link href="/example3">
+            {" "}
+            <div className="bg-white p-4 rounded-lg shadow-md">
+              <img
+                src="/images/exm1.jpg"
+                alt="Example 3"
+                className="mb-4 w-full h-60 object-cover rounded-lg"
+              />
+              <p className="text-gray-700 mb-4">
+                Uploading multiple 2D images to generate a more detailed 3D
+                model.
+              </p>
+            </div>
+          </Link>
         </div>
       </div>
     </div>
