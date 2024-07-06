@@ -24,7 +24,7 @@ const DownloadApp = () => {
               Get the full AutoBazar experience by downloading our app. Access all features, upload ads, and add images for 3D models seamlessly.
             </p>
             <div className="flex justify-center space-x-4  relative">
-              <a className="bg-blue-500 rounded-lg px-4 py-2" href="https://play.google.com/store/apps/details?id=com.autobazar" target="_blank" rel="noopener noreferrer">
+              <a className="bg-blue-500 rounded-lg px-4 py-2"  href="https://firebasestorage.googleapis.com/v0/b/dautobazaar.appspot.com/o/apk%2F3DAutoBazar.zip?alt=media&token=1b6e9eeb-73f0-4651-07c-d506672a9508" target="_blank" rel="noopener noreferrer">
                Download app
               </a>
 
