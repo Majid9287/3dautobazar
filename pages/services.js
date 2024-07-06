@@ -25,7 +25,8 @@ export default function ApiGuide() {
 
         <h2 className="text-xl font-semibold mb-4">API Endpoint</h2>
         <p className="mb-4">
-          <strong>POST</strong> <code>{apiUrl}</code>
+          <strong>POST</strong>  <pre className="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mb-6">
+          <code>{apiUrl}</code></pre>
         </p>
 
         <h2 className="text-xl font-semibold mb-4">Request Format</h2>
